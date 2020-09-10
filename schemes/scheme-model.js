@@ -7,7 +7,8 @@ module.exports = {
     findById,
     findSteps,
     add,
-    update
+    update,
+    remove
 };
 
 function find() {
@@ -41,4 +42,19 @@ function update(changes, id) {
             .then(response => {
                 return findById(id)
             })
+}
+
+async function remove(id) {
+const removed = await findById(id);
+if (removed) {
+    return db('schemes')    
+    .where({ id })
+    .del()
+        .then(result => {
+            return removed
+        })
+}
+else {
+    return null
+}
 }
